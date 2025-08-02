@@ -35,8 +35,9 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject"
+    "test": "craco test --watchAll=false --coverage",
+    "eject": "craco eject",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx"
   },
   "eslintConfig": {
     "extends": [
@@ -57,7 +58,11 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.29.0",
     "@testing-library/cypress": "^10.0.3",
-    "cypress": "^14.3.3"
+    "cypress": "^14.3.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.2.0"
   }
 }

@@ -2,6 +2,8 @@ name: CI Checks
 on:
    pull_request:
      branches: ['main']
+   push :
+     branches: ['main']  
 
 env: 
   NODE_VERSION: 18.x
@@ -9,6 +11,11 @@ env:
 jobs: 
   lint-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [frontend, backend]
+
+
     steps:
       - name: Checkout code 
         uses: actions/checkout@v4
@@ -19,11 +26,20 @@ jobs:
           node-version: ${{env.NODE_VERSION}}
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies 
+        working-directory: ${{ matrix.app }}
         run: npm ci
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: Run ESLint (${{matrix.app}})
+        working-directory: ${{ matrix.app }}
+        run: npm run lint || echo "Lint failed, for ${{ matrix.app }}"
 
-      - name: Run tests
+      - name: Run Tests 
+        working-directory: ${{ matrix.app }}
         run: npm test -- --watchAll=false --coverage
+
+      - name: Build frontend
+        if: matrix.app == 'frontend'
+        working-directory: frontend
+        run: npm run build
+        

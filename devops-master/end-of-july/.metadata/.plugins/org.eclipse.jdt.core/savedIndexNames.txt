@@ -1,0 +1,2 @@
+INDEX VERSION 1.134+/home/mame/devops-master/end-of-july/.metadata/.plugins/org.eclipse.jdt.core
+2958864389.index
